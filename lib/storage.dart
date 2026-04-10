@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'models.dart';
@@ -39,6 +40,7 @@ class TrackerStorage {
         ),
       );
     } catch (_) {
+      debugPrint('Day Tracker: local data was invalid, resetting to defaults.');
       return TrackerStorageData(categories: [], records: {});
     }
   }

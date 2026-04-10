@@ -5,6 +5,8 @@ import 'logic.dart';
 import 'models.dart';
 import 'storage.dart';
 
+const int categoryIdRandomRange = 1 << 31;
+
 class TrackerController extends ChangeNotifier {
   TrackerController({TrackerStorage? storage}) : _storage = storage ?? TrackerStorage();
 
@@ -135,7 +137,7 @@ class TrackerController extends ChangeNotifier {
   String _newId() {
     final micros = DateTime.now().microsecondsSinceEpoch;
     _idCounter += 1;
-    final randomPart = _random.nextInt(1 << 31);
+    final randomPart = _random.nextInt(categoryIdRandomRange);
     return '${micros}_${_idCounter}_$randomPart';
   }
 }

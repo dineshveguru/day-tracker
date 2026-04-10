@@ -7,6 +7,8 @@ import 'models.dart';
 const int heatmapDaysCount = 84;
 const int heatmapWeekColumns = 12;
 const int heatmapRowsPerWeek = 7;
+const int datePickerPastDays = 3650;
+const int datePickerFutureDays = 365;
 
 void main() {
   runApp(const DayTrackerApp());
@@ -109,8 +111,8 @@ class _TrackerHomeState extends State<TrackerHome> with SingleTickerProviderStat
     final selected = await showDatePicker(
       context: context,
       initialDate: _controller.selectedDate,
-      firstDate: DateTime.now().subtract(const Duration(days: 3650)),
-      lastDate: DateTime.now().add(const Duration(days: 365)),
+      firstDate: DateTime.now().subtract(const Duration(days: datePickerPastDays)),
+      lastDate: DateTime.now().add(const Duration(days: datePickerFutureDays)),
     );
     if (selected != null) {
       await _controller.pickDate(selected);
