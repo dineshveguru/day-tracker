@@ -10,6 +10,7 @@ class TrackerController extends ChangeNotifier {
 
   final TrackerStorage _storage;
   final Random _random = Random();
+  int _idCounter = 0;
 
   bool loading = true;
   bool editActual = false;
@@ -133,7 +134,8 @@ class TrackerController extends ChangeNotifier {
 
   String _newId() {
     final micros = DateTime.now().microsecondsSinceEpoch;
-    final randomPart = _random.nextInt(1 << 20);
-    return '${micros}_$randomPart';
+    _idCounter += 1;
+    final randomPart = _random.nextInt(1 << 31);
+    return '${micros}_${_idCounter}_$randomPart';
   }
 }

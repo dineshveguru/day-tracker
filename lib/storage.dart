@@ -23,20 +23,24 @@ class TrackerStorage {
     if (raw == null || raw.isEmpty) {
       return TrackerStorageData(categories: [], records: {});
     }
-    final decoded = jsonDecode(raw) as Map<String, dynamic>;
-    final categoriesJson = (decoded['categories'] as List<dynamic>? ?? []);
-    final recordsJson = (decoded['records'] as Map<String, dynamic>? ?? {});
-    return TrackerStorageData(
-      categories: categoriesJson
-          .map((c) => TrackerCategory.fromJson(Map<String, dynamic>.from(c as Map)))
-          .toList(),
-      records: recordsJson.map(
-        (key, value) => MapEntry(
-          key,
-          DayRecord.fromJson(Map<String, dynamic>.from(value as Map)),
+    try {
+      final decoded = jsonDecode(raw) as Map<String, dynamic>;
+      final categoriesJson = (decoded['categories'] as List<dynamic>? ?? []);
+      final recordsJson = (decoded['records'] as Map<String, dynamic>? ?? {});
+      return TrackerStorageData(
+        categories: categoriesJson
+            .map((c) => TrackerCategory.fromJson(Map<String, dynamic>.from(c as Map)))
+            .toList(),
+        records: recordsJson.map(
+          (key, value) => MapEntry(
+            key,
+            DayRecord.fromJson(Map<String, dynamic>.from(value as Map)),
+          ),
         ),
-      ),
-    );
+      );
+    } catch (_) {
+      return TrackerStorageData(categories: [], records: {});
+    }
   }
 
   Future<void> save({

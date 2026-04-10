@@ -53,6 +53,8 @@ git clone https://github.com/dineshveguru/day-tracker.git
 cd day-tracker
 ```
 
+If you are using your own fork, replace `dineshveguru` with your GitHub username.
+
 ---
 
 ## 4) Generate Android project files
