@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 import 'logic.dart';
 import 'models.dart';
@@ -8,6 +9,7 @@ class TrackerController extends ChangeNotifier {
   TrackerController({TrackerStorage? storage}) : _storage = storage ?? TrackerStorage();
 
   final TrackerStorage _storage;
+  final Random _random = Random();
 
   bool loading = true;
   bool editActual = false;
@@ -66,7 +68,7 @@ class TrackerController extends ChangeNotifier {
   }) async {
     _categories.add(
       TrackerCategory(
-        id: DateTime.now().microsecondsSinceEpoch.toString(),
+        id: _newId(),
         name: name.trim(),
         colorValue: color.value,
       ),
@@ -128,4 +130,10 @@ class TrackerController extends ChangeNotifier {
         TrackerCategory(id: 'health', name: 'Health', colorValue: const Color(0xFF39FF14).value),
         TrackerCategory(id: 'learn', name: 'Learning', colorValue: const Color(0xFFFF00C8).value),
       ];
+
+  String _newId() {
+    final micros = DateTime.now().microsecondsSinceEpoch;
+    final randomPart = _random.nextInt(1 << 20);
+    return '${micros}_$randomPart';
+  }
 }

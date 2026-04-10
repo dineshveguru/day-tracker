@@ -4,6 +4,10 @@ import 'controller.dart';
 import 'logic.dart';
 import 'models.dart';
 
+const int heatmapDaysCount = 84;
+const int heatmapWeekColumns = 12;
+const int heatmapRowsPerWeek = 7;
+
 void main() {
   runApp(const DayTrackerApp());
 }
@@ -316,9 +320,9 @@ class _CategoryHeatmapCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final end = DateTime.now();
-    final start = end.subtract(const Duration(days: 83));
+    final start = end.subtract(const Duration(days: heatmapDaysCount - 1));
     final days = <DateTime>[];
-    for (int i = 0; i < 84; i++) {
+    for (int i = 0; i < heatmapDaysCount; i++) {
       final d = start.add(Duration(days: i));
       days.add(DateTime(d.year, d.month, d.day));
     }
@@ -355,8 +359,8 @@ class _CategoryHeatmapCard extends StatelessWidget {
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
-                  children: List.generate(12, (week) {
-                    final weekDays = days.skip(week * 7).take(7).toList();
+                  children: List.generate(heatmapWeekColumns, (week) {
+                    final weekDays = days.skip(week * heatmapRowsPerWeek).take(heatmapRowsPerWeek).toList();
                     return Padding(
                       padding: const EdgeInsets.only(right: 4),
                       child: Column(
