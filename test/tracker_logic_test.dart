@@ -47,4 +47,24 @@ void main() {
       expect(result.best, 3);
     });
   });
+
+  group('TrackerLogic.hoursByCategory', () {
+    test('aggregates planned and actual hours independently', () {
+      final record = DayRecord.empty('2026-01-01');
+      record.hours[0].plannedCategoryId = 'work';
+      record.hours[1].plannedCategoryId = 'work';
+      record.hours[2].plannedCategoryId = 'learn';
+      record.hours[3].actualCategoryId = 'work';
+      record.hours[4].actualCategoryId = 'health';
+
+      final planned = TrackerLogic.hoursByCategory(record, false);
+      final actual = TrackerLogic.hoursByCategory(record, true);
+
+      expect(planned['work'], 2);
+      expect(planned['learn'], 1);
+      expect(actual['work'], 1);
+      expect(actual['health'], 1);
+      expect(actual['learn'], isNull);
+    });
+  });
 }

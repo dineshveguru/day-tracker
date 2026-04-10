@@ -67,7 +67,8 @@ class TrackerLogic {
 
     int current = 0;
     final activeSet = activeDates.map(dateKey).toSet();
-    DateTime cursor = DateTime.now();
+    final now = DateTime.now();
+    DateTime cursor = DateTime(now.year, now.month, now.day);
     while (true) {
       final key = dateKey(cursor);
       if (!activeSet.contains(key)) break;

@@ -189,7 +189,7 @@ class _JournalTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dateLabel = '${controller.selectedDate.year}-${controller.selectedDate.month.toString().padLeft(2, '0')}-${controller.selectedDate.day.toString().padLeft(2, '0')}';
+    final dateLabel = TrackerLogic.dateKey(controller.selectedDate);
     return Column(
       children: [
         Padding(
